@@ -3,3 +3,47 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+body {
+    background-image: url("—Pngtree—3d\ render\ of\ a\ delicious_5835736.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: beige;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 25px;
+    border-radius: 10px;
+    outline: 3px solid #000;
+}
+
+.container h1 {
+    color: #000;
+}
+
+.container button {
+    margin: 0 170px 0 170px;
+    padding: 10px 0 10px 0;
+    border: none;
+    outline: 2px solid #000;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #000;
+    color: #fff;
+}
+
+.container button:hover {
+    background-color: #ff9900;
+    color: #FFF;
+    outline-offset: 3px;
+    transition: 0.3s;
+}
