@@ -143,4 +143,38 @@ function agregarProducto() {
     alert(` Producto "${nombre}" agregado al menú.`);
     }
 
+///////////////////////////////////////////////////////////////////////////////////////////
+//  FUNCION 4: SANTIAGO MODIFICAR PRODUCTO
+
+
+function modificarProducto() {
+    if (menu.length === 0) {
+        alert(" El menú está vacío.");
+        return;
+    }
+
+    let lista = " Productos disponibles:\n";
+    menu.forEach((prod, i) => {
+        lista += `${i + 1}. ${prod.nombre} - $${prod.precio} - ${prod.tiempo} min\n`;
+    });
+
+    const index = parseInt(prompt(lista + "\nSeleccione el número del producto a modificar:")) - 1;
+
+    if (isNaN(index) || index < 0 || index >= menu.length) {
+        alert("❗ Selección inválida.");
+        return;
+    }
+
+    const nuevoPrecio = parseFloat(prompt("Nuevo precio:"));
+    const nuevoTiempo = parseInt(prompt("Nuevo tiempo de preparación:"));
+
+    if (isNaN(nuevoPrecio) || isNaN(nuevoTiempo)) {
+        alert("❗ Datos inválidos.");
+        return;
+    }
+
+    menu[index].precio = nuevoPrecio;
+    menu[index].tiempo = nuevoTiempo;
+    alert(` Producto "${menu[index].nombre}" actualizado.`);
+}
 
