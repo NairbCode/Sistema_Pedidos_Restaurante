@@ -178,3 +178,28 @@ function modificarProducto() {
     alert(` Producto "${menu[index].nombre}" actualizado.`);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  fUNCION 5 santiago: ELIMINAR PRODUCTO
+
+
+function eliminarProducto() {
+    if (menu.length === 0) {
+        alert(" El menú está vacío.");
+        return;
+    }
+
+    let lista = " Productos disponibles:\n";
+    menu.forEach((prod, i) => {
+        lista += `${i + 1}. ${prod.nombre}\n`;
+    });
+
+    const index = parseInt(prompt(lista + "\nSeleccione el número del producto a eliminar:")) - 1;
+
+    if (isNaN(index) || index < 0 || index >= menu.length) {
+        alert("❗ Selección inválida.");
+        return;
+    }
+
+    const eliminado = menu.splice(index, 1);
+    alert(` Producto "${eliminado[0].nombre}" eliminado del menú.`);
+    }
