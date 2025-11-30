@@ -124,3 +124,23 @@ function modoAdmin() {
     } while (opcion !== "4");
 }
 
+
+
+//////////////////////////////////////////////////////////////////////
+//  fUNCION 3 SANTIUAGO: AGREGAR PRODUCTO
+
+function agregarProducto() {
+    const nombre = prompt(" Nombre del nuevo producto:");
+    const precio = parseFloat(prompt(" Precio del producto:"));
+    const tiempo = parseInt(prompt(" Tiempo de preparación (minutos):"));
+
+    if (!nombre || isNaN(precio) || isNaN(tiempo)) {
+        alert(" Datos inválidos. Intente de nuevo.");
+        return;
+    }
+
+    menu.push({ nombre, precio, tiempo });
+    alert(` Producto "${nombre}" agregado al menú.`);
+    }
+
+
