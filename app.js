@@ -56,3 +56,39 @@ function iniciarSistema() {
     } while (opciones !== "5");
 
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//  SECCIÓN 1 SANTRIAGO: VALIDACIÓN DE CLAVE
+
+// Contraseña de acceso
+const CLAVE_CORRECTA = "1234";
+
+// Seleccionamos elementos del HTML
+const inputClave = document.querySelector('input[type="password"]');
+const boton = document.querySelector('button');
+
+// Crear el mensaje de error
+const mensajeError = document.createElement("p");
+mensajeError.textContent = "❌ Clave incorrecta ❌";
+mensajeError.style.color = "red";
+mensajeError.style.display = "none";
+document.querySelector("main").appendChild(mensajeError);
+
+// Evento del botón
+boton.addEventListener("click", (e) => {
+  e.preventDefault(); // evitar recarga
+    verificarClave();
+    });
+
+    // Función para verificar la clave
+    function verificarClave() {
+    const claveIngresada = inputClave.value;
+
+    if (claveIngresada === CLAVE_CORRECTA) {
+        alert("✅ Acceso concedido ✅");
+        mensajeError.style.display = "none";
+        modoAdministrador(); // Entrar al modo administrador
+    } else {
+        mensajeError.style.display = "block";
+    }
+}
