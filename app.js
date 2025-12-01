@@ -185,3 +185,60 @@ function verEstado() {
     alert(textEstado);
 
 }
+
+
+/**FUNCION DE PAGAR CUENTA */
+/**======================= */
+function pagarCuenta() {
+
+    /**AQUI ABAJO LE PIDE AL USUARIO CUAL ES LA MESA QUE QUIERE PAGAR*/
+    let mesa;
+
+    do{
+
+        let mesaSeleccionada = prompt(
+            "Ingrese el numero de mesa (1-4): \n" +
+            "5. Salir."
+        );
+
+        mesa = parseInt(mesaSeleccionada);
+
+        if (mesa > 5 || mesa < 1 || isNaN(mesa)) {
+            alert("Ingrese una opcion valida.");
+        }
+
+        if (mesa === 5) {
+            return;
+        }
+
+    } while (isNaN(mesa) || mesa < 1 || mesa > 4);
+
+    let pedidos = mesas[mesa - 1];
+
+    if (pedidos.length === 0) {
+        alert("No hay cuenta pendiente.");
+        return;
+    }
+
+    let textoPagarCuenta = "DETALLES DE LA CUENTA\n" +
+                            "=================\n";
+    let total = 0;
+
+    /**RECORRE LA ARRAY DE PEDIDOS Y HACE EL SUDTOTAL Y TOTAL CON ELLO, MIRA LOS PRECIOS Y CANTIDAD*/
+    pedidos.forEach(p => {
+        let sudTotal = p.cantidad * p.precio;
+        total += sudTotal;
+        textoPagarCuenta += `${p.cantidad} x ${p.nombre} = $${sudTotal}\n`;
+    })
+
+    textoPagarCuenta += `\nTOTAL: $${total} `;
+
+    let confirmar = confirm(textoPagarCuenta + "\nConfirmar pago: ");
+
+    /**AQUI SE PONE LA CONDICION DE SI PAGA LA CUENTA O NO, EN CASO QUE SEA SI MUESTRA UN MENSAJE QUE FUE UN PAGO EXITOSO */
+    if (confirmar === true) {
+        mesas[mesa - 1] = [];
+        alert("Pago exitoso.");
+    }
+
+}
