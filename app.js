@@ -92,7 +92,7 @@ function hacerPedido() {
         menuTexto += `${i + 1}. ${m.nombre} - ${m.precio} - ${m.tiempo}min \n`;
     });
 
-    menuTexto += "5. Salir.\n";
+    menuTexto += "-5. Salir.\n";
     let comidaSeleccionada;
 
     do{
@@ -100,7 +100,7 @@ function hacerPedido() {
         let comidaEscoger = prompt(menuTexto + "\nIngrese lo que disfrutara:");
         comidaSeleccionada = parseInt(comidaEscoger) - 1;
 
-        if ((comidaSeleccionada + 1) === 5) {
+        if ((comidaSeleccionada + 1) === -5) {
             return;
         }
 
