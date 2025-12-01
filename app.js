@@ -165,3 +165,23 @@ function calcularTiempo(mesaIdx) {
     return total;
 
 }
+
+/**FUNCION PAFRA VER LOS ESTADOS DE LOS PEDIDOS DE LAS MESAS */
+/**========================================================= */
+function verEstado() {
+
+    let textEstado = "ESTADOS DE PREPARACION\n" +
+                    "==================\n";
+    /**RECORRE LA ARRAY DE MESAS Y VERIFICA SI HAY ALGUNA ARRAY QUE ESTE LLENA O NO */
+    mesas.forEach((mesa, i) => {
+        if (mesa.length === 0) {
+            textEstado += `Mesa ${i + 1}: Sin pedidos.\n`;
+        } else {
+            let tiempo = calcularTiempo(i);
+            textEstado += `Mesa ${i + 1}: ${tiempo} min Restantes.\n`;
+        }
+    });
+
+    alert(textEstado);
+
+}
