@@ -44,7 +44,7 @@ function iniciarSistema() {
                 pagarCuenta();
                 break;
             case "4":
-                modoAdmin();
+                validarContrasena();
                 break;
             case "5":
                 alert("Saliendo del sistema...");
@@ -249,32 +249,25 @@ function pagarCuenta() {
 // Contraseña de acceso
 
 
-// Crear el mensaje de error
-const mensajeError = document.createElement("p");
-mensajeError.textContent = "Clave incorrecta ";
-mensajeError.style.color = "red";
-mensajeError.style.display = "none";
-document.querySelector("main").appendChild(mensajeError);
-
-
-
-    // Función para verificar la clave
-    function modoAdmin() {
-    const claveIngresada = inputClave.value;
+/**FUNCION PARA VALIDAR CONTRASEÑA */
+function validarContrasena() {
     const CLAVE_CORRECTA = "1234";
-
-    // Seleccionamos elementos del HTML
-    const inputClave = document.querySelector('input[type="password"]');
-    const boton = document.querySelector('button');
+    const claveIngresada = prompt("Ingrese la clave de administrador:");
 
     if (claveIngresada === CLAVE_CORRECTA) {
-        alert("Acceso permitido");
-        mensajeError.style.display = "none";
-        modoAdmin(); // Entrar al modo administrador
+        alert("Acceso permitido ");
+        modoAdmin(); // solo se ejecuta si la clave es correcta
     } else {
-        mensajeError.style.display = "block";
+        alert("Clave incorrecta ");
     }
 }
+
+/**FUNCION MODO ADMIN */
+function modoAdmin() {
+    alert("Modo Admin ACTIVADO");
+    // Aquí colocas las funciones exclusivas del administrador
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //  SECCIÓN 3 Santiago : MODO ADMINISTRADOR
