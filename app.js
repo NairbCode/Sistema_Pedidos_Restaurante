@@ -56,3 +56,97 @@ function iniciarSistema() {
     } while (opciones !== "5");
 
 }
+
+/**FUNCION PARA HACER EL PEDIDO*/
+/**=========================== */
+function hacerPedido() {
+    
+    /**PARTE DE LA LOGICA DE LA SELECCION DE LAS MESAS Y SU MENU*/
+    let mesa;
+
+    do{
+
+        let mesaSeleccionada = prompt(
+            "Ingrese el numero de mesa (1-4): \n" +
+            "5. Salir."
+        );
+
+        mesa = parseInt(mesaSeleccionada);
+
+        if (mesa > 5 || mesa < 1 || isNaN(mesa)) {
+            alert("Ingrese una opcion valida.");
+        }
+
+        if (mesa === 5) {
+            return;
+        }
+
+    } while (isNaN(mesa) || mesa < 1 || mesa > 4);
+
+
+    /**PARTE DE LA LOGICA DE LA SELECCION DEL MENU DE COMIDA*/
+    let menuTexto = "MENU DE COMIDA\n" + 
+                    "=============\n";
+        menu.forEach((m, i) => {
+        menuTexto += `${i + 1}. ${m.nombre} - ${m.precio} - ${m.tiempo}min \n`;
+    });
+
+    menuTexto += "5. Salir.\n";
+    let comidaSeleccionada;
+
+    do{
+
+        let comidaEscoger = prompt(menuTexto + "\nIngrese lo que disfrutara:");
+        comidaSeleccionada = parseInt(comidaEscoger) - 1;
+
+        if ((comidaSeleccionada + 1) === 5) {
+            return;
+        }
+
+        if (isNaN(comidaSeleccionada) || !menu[comidaSeleccionada]) {
+            alert("Ingrese una opcion valida.");
+        }
+
+    } while (isNaN(comidaSeleccionada) || !menu[comidaSeleccionada]);
+
+    /**PARTE DE LA CANTIDAD A SELECCIONAR DE LA COMIDA QUE SE ESCOGIO */
+    let cantidad;
+
+    do{
+
+        let cantidadIngresada = prompt(
+            "-Ingrese (-5) si quiere ir al menu principal\n" +
+            "Ingrese la cantidad: " 
+        );
+        cantidad = parseInt(cantidadIngresada);
+
+        if (cantidad === -5) {
+            return;
+        }
+
+        if (isNaN(cantidad) || cantidad <= 0) {
+            alert("Ingrese una cantidad valida (1 en adelante).");
+        }
+
+
+    } while (isNaN(cantidad) || cantidad <= 0);
+
+    let pedido = {
+        nombre: menu[comidaSeleccionada].nombre,
+        cantidad: cantidad,
+        precio: menu[comidaSeleccionada].precio,
+        tiempo: menu[comidaSeleccionada].tiempo,
+    };
+
+    mesas[mesa - 1].push(pedido);
+
+    /**AQUI EN ESTA PARTE LLAMAMOS LA FUNCION DE CALCULARTIEMPO */
+    let tiempoTotal = calcularTiempo(mesa - 1);
+
+    alert(
+        "Pedido registrado:\n" +
+        `${pedido.cantidad} x ${pedido.nombre}\n` +
+        `Tiempo total estimado: ${tiempoTotal} min`
+    );
+    
+}
