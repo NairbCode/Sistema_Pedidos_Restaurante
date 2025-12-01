@@ -150,3 +150,18 @@ function hacerPedido() {
     );
     
 }
+
+
+/**FUNCION PARA CALCULAR TIEMPO QUE SE DEMORA EL PEDIDO*/
+/**====================================================*/
+function calcularTiempo(mesaIdx) {
+
+    let total = 0;
+
+    mesas[mesaIdx].forEach(p => {
+        total += p.tiempo;
+    });
+
+    return total;
+
+}
