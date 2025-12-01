@@ -57,7 +57,7 @@ function iniciarSistema() {
 
 }
 
-<<<<<<< HEAD
+
 /**FUNCION PARA HACER EL PEDIDO*/
 /**=========================== */
 function hacerPedido() {
