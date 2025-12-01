@@ -251,7 +251,7 @@ function pagarCuenta() {
 
 // Crear el mensaje de error
 const mensajeError = document.createElement("p");
-mensajeError.textContent = "❌ Clave incorrecta ❌";
+mensajeError.textContent = "Clave incorrecta ";
 mensajeError.style.color = "red";
 mensajeError.style.display = "none";
 document.querySelector("main").appendChild(mensajeError);
@@ -268,7 +268,7 @@ document.querySelector("main").appendChild(mensajeError);
     const boton = document.querySelector('button');
 
     if (claveIngresada === CLAVE_CORRECTA) {
-        alert("✅ Acceso concedido ✅");
+        alert("Acceso permitido");
         mensajeError.style.display = "none";
         modoAdmin(); // Entrar al modo administrador
     } else {
@@ -347,7 +347,7 @@ function modificarProducto() {
     const index = parseInt(prompt(lista + "\nSeleccione el número del producto a modificar:")) - 1;
 
     if (isNaN(index) || index < 0 || index >= menu.length) {
-        alert("❗ Selección inválida.");
+        alert("Selección inválida.");
         return;
     }
 
@@ -355,7 +355,7 @@ function modificarProducto() {
     const nuevoTiempo = parseInt(prompt("Nuevo tiempo de preparación:"));
 
     if (isNaN(nuevoPrecio) || isNaN(nuevoTiempo)) {
-        alert("❗ Datos inválidos.");
+        alert(" Datos inválidos.");
         return;
     }
 
