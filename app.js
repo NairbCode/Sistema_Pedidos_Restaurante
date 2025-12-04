@@ -9,7 +9,12 @@ let menu = [
 ];
 
 /**ESTA ARRAY EN PARA LAS MESAS */
-let mesas = [[], [], [], []]
+let mesas = [
+    {id: 1, pedido: []}, 
+    {id: 2, pedido: []}, 
+    {id: 3, pedido: []},
+    {id: 4, pedido: []}
+];
 
 
 /**FUNCION PRINCIPAL INICIAR EL SISTEMA */
@@ -64,7 +69,6 @@ function hacerPedido() {
     
     /**PARTE DE LA LOGICA DE LA SELECCION DE LAS MESAS Y SU MENU*/
     let mesa;
-
     do{
 
         let mesaSeleccionada = prompt(
@@ -85,72 +89,98 @@ function hacerPedido() {
     } while (isNaN(mesa) || mesa < 1 || mesa > 4);
 
 
-    /**PARTE DE LA LOGICA DE LA SELECCION DEL MENU DE COMIDA*/
-    let menuTexto = "MENU DE COMIDA\n" + 
-                    "=============\n";
-        menu.forEach((m, i) => {
-        menuTexto += `${i + 1}. ${m.nombre} - ${m.precio} - ${m.tiempo}min \n`;
-    });
+    
+    let seguirPidiendo;
 
-    menuTexto += "-5. Salir.\n";
-    let comidaSeleccionada;
+    do {
 
-    do{
+        /**PARTE DE LA LOGICA DE LA SELECCION DEL MENU DE COMIDA*/
+        let menuTexto = "MENU DE COMIDA\n" + 
+                        "=============\n";
+            menu.forEach((m, i) => {
+            menuTexto += `${i + 1}. ${m.nombre} - ${m.precio} - ${m.tiempo}min \n`;
+        });
 
-        let comidaEscoger = prompt(menuTexto + "\nIngrese lo que disfrutara:");
-        comidaSeleccionada = parseInt(comidaEscoger) - 1;
+        menuTexto += "5. Salir.\n";
+        let comidaSeleccionada;
 
-        if ((comidaSeleccionada + 1) === -5) {
-            return;
-        }
+        do{
 
-        if (isNaN(comidaSeleccionada) || !menu[comidaSeleccionada]) {
-            alert("Ingrese una opcion valida.");
-        }
+            let comidaEscoger = prompt(menuTexto + "\nIngrese lo que disfrutara:");
+            comidaSeleccionada = parseInt(comidaEscoger) - 1;
 
-    } while (isNaN(comidaSeleccionada) || !menu[comidaSeleccionada]);
+            if ((comidaSeleccionada + 1) === 5) {
+                return;
+            }
 
-    /**PARTE DE LA CANTIDAD A SELECCIONAR DE LA COMIDA QUE SE ESCOGIO */
-    let cantidad;
+            if (isNaN(comidaSeleccionada) || !menu[comidaSeleccionada]) {
+                alert("Ingrese una opcion valida.");
+            }
 
-    do{
 
-        let cantidadIngresada = prompt(
-            "-Ingrese (-5) si quiere ir al menu principal\n" +
-            "Ingrese la cantidad: " 
+        } while (isNaN(comidaSeleccionada) || !menu[comidaSeleccionada]);
+
+        /**PARTE DE LA CANTIDAD A SELECCIONAR DE LA COMIDA QUE SE ESCOGIO */
+        let cantidad;
+
+        do{
+
+            let cantidadIngresada = prompt(
+                "-Ingrese (-5) si quiere ir al menu principal\n" +
+                "Ingrese la cantidad: " 
+            );
+            cantidad = parseInt(cantidadIngresada);
+
+            if (cantidad === -5) {
+                return;
+            }
+
+            if (isNaN(cantidad) || cantidad <= 0) {
+                alert("Ingrese una cantidad valida (1 en adelante).");
+            }
+
+
+        } while (isNaN(cantidad) || cantidad <= 0);
+
+
+        let pedido = {
+            nombre: menu[comidaSeleccionada].nombre,
+            cantidad: cantidad,
+            precio: menu[comidaSeleccionada].precio,
+            tiempo: menu[comidaSeleccionada].tiempo,
+        };
+
+        mesas[mesa - 1].pedido.push(pedido);
+
+        /**AQUI EN ESTA PARTE LLAMAMOS LA FUNCION DE CALCULARTIEMPO */
+        let tiempoTotal = calcularTiempo(mesa - 1);
+
+        alert(
+            "Pedido registrado:\n" +
+            `${pedido.cantidad} x ${pedido.nombre}\n` +
+            `Tiempo total estimado: ${tiempoTotal} min`
         );
-        cantidad = parseInt(cantidadIngresada);
 
-        if (cantidad === -5) {
-            return;
-        }
+        let elijaOpcionSeguirOrden = prompt( "Elija una opcion si desea algo mas: \n" +
+                    "1. Si\n" +
+                    "2. No"
+            );
 
-        if (isNaN(cantidad) || cantidad <= 0) {
-            alert("Ingrese una cantidad valida (1 en adelante).");
-        }
+            seguirPidiendo = parseInt(elijaOpcionSeguirOrden);
 
+            if (seguirPidiendo === 1) {
+                seguirPidiendo = true;
+            }
 
-    } while (isNaN(cantidad) || cantidad <= 0);
+            if (seguirPidiendo === 2) {
+                seguirPidiendo = false;
+            }
 
-    let pedido = {
-        nombre: menu[comidaSeleccionada].nombre,
-        cantidad: cantidad,
-        precio: menu[comidaSeleccionada].precio,
-        tiempo: menu[comidaSeleccionada].tiempo,
-    };
-
-    mesas[mesa - 1].push(pedido);
-
-    /**AQUI EN ESTA PARTE LLAMAMOS LA FUNCION DE CALCULARTIEMPO */
-    let tiempoTotal = calcularTiempo(mesa - 1);
-
-    alert(
-        "Pedido registrado:\n" +
-        `${pedido.cantidad} x ${pedido.nombre}\n` +
-        `Tiempo total estimado: ${tiempoTotal} min`
-    );
+    
+    } while (seguirPidiendo === true);
     
 }
+
 
 
 /**FUNCION PARA CALCULAR TIEMPO QUE SE DEMORA EL PEDIDO*/
@@ -159,7 +189,7 @@ function calcularTiempo(mesaIdx) {
 
     let total = 0;
 
-    mesas[mesaIdx].forEach(p => {
+    mesas[mesaIdx].pedido.forEach(p => {
         total += p.tiempo;
     });
 
@@ -175,11 +205,23 @@ function verEstado() {
                     "==================\n";
     /**RECORRE LA ARRAY DE MESAS Y VERIFICA SI HAY ALGUNA ARRAY QUE ESTE LLENA O NO */
     mesas.forEach((mesa, i) => {
-        if (mesa.length === 0) {
+        if (mesa.pedido.length === 0) {
+
             textEstado += `Mesa ${i + 1}: Sin pedidos.\n`;
+
         } else {
+
             let tiempo = calcularTiempo(i);
-            textEstado += `Mesa ${i + 1}: ${tiempo} min Restantes.\n`;
+            textEstado += `Mesa ${mesa.id}: ${tiempo} min Restantes.\n`;
+
+
+            mesa.pedido.forEach(p => {
+                let subtotal = p.cantidad * p.precio;
+                textEstado += ` ${p.cantidad} x ${p.nombre} = $${subtotal}\n`;
+            });
+
+            textEstado += "\n";
+
         }
     });
 
@@ -214,7 +256,7 @@ function pagarCuenta() {
 
     } while (isNaN(mesa) || mesa < 1 || mesa > 4);
 
-    let pedidos = mesas[mesa - 1];
+    let pedidos = mesas[mesa - 1].pedido;
 
     if (pedidos.length === 0) {
         alert("No hay cuenta pendiente.");
@@ -238,7 +280,7 @@ function pagarCuenta() {
 
     /**AQUI SE PONE LA CONDICION DE SI PAGA LA CUENTA O NO, EN CASO QUE SEA SI MUESTRA UN MENSAJE QUE FUE UN PAGO EXITOSO */
     if (confirmar === true) {
-        mesas[mesa - 1] = [];
+        mesas[mesa - 1].pedido = [];
         alert("Pago exitoso.");
     }
 
